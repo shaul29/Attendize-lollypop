@@ -1,8 +1,14 @@
-# Multi stage docker file for the Attendize application layer images
-
 # Base image with nginx, php-fpm and composer built on debian
 FROM wyveo/nginx-php-fpm:php74 as base
-RUN apt-get update && apt-get install -y wait-for-it libxrender1
+
+# Fix the expired key for sury.org repository
+RUN apt-get install -y --no-install-recommends gnupg && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B188E2B695BD4743
+
+# Update and install necessary packages
+RUN apt-get update && apt-get install -y \
+    wait-for-it \
+    libxrender1
 
 # Set up code
 WORKDIR /usr/share/nginx/html
@@ -13,7 +19,6 @@ RUN ./scripts/setup
 
 # The worker container runs the laravel queue in the background
 FROM base as worker
-
 CMD ["php", "artisan", "queue:work", "--daemon"]
 
 # The web container runs the HTTP server and connects to all other services in the application stack
@@ -35,6 +40,3 @@ EXPOSE 443
 
 # Starting nginx server
 CMD ["/start.sh"]
-
-# NOTE: if you are deploying to production with this image, you should extend this Dockerfile with another stage that
-# performs clean up (i.e. removing composer) and installs your own dependencies (i.e. your own ssl certificate).
