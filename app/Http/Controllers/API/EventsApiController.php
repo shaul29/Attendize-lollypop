@@ -7,21 +7,19 @@ use Illuminate\Http\Request;
 
 class EventsApiController extends ApiBaseController
 {
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
     public function index(Request $request)
     {
-        return Event::scope($this->account_id)->paginate(20);
+        $query = Event::query(); 
+
+        if ($request->has('title')) {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        $events = $query->paginate(20); 
+
+        return response()->json($events);
     }
 
-    /**
-     * @param Request $request
-     * @param $attendee_id
-     * @return mixed
-     */
     public function show(Request $request, $attendee_id)
     {
         if ($attendee_id) {

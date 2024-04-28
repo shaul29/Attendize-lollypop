@@ -183,12 +183,17 @@ class EventController extends MyBaseController
             $img->save($file_full_path);
 
             /* Upload to s3 */
-            \Storage::put(config('attendize.event_images_path') . '/' . $filename, file_get_contents($file_full_path));
-
-            $eventImage = EventImage::createNew();
-            $eventImage->image_path = config('attendize.event_images_path') . '/' . $filename;
-            $eventImage->event_id = $event->id;
-            $eventImage->save();
+            try {
+                \Storage::put(config('attendize.event_images_path') . '/' . $filename, file_get_contents($file_full_path));
+                Log::info('File uploaded to S3 successfully', ['filename' => $filename]);
+            
+                $eventImage = EventImage::createNew();
+                $eventImage->image_path = config('attendize.event_images_path') . '/' . $filename;
+                $eventImage->event_id = $event->id;
+                $eventImage->save();
+            } catch (\Exception $e) {
+                Log::error('Failed to upload file to S3', ['filename' => $filename, 'error' => $e->getMessage()]);
+            }
         }
 
         return response()->json([
