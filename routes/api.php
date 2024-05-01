@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\EventsApiController;
+use App\Http\Controllers\API\TicketsApiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('events', API\EventsApiController::class);
 
 Route::get('/events', [EventsApiController::class, 'index']);
+
+Route::get('/events/{event_id}/tickets', [TicketsApiController::class, 'index'])->name('events.tickets');
 
 
 
