@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Log;
+use Illuminate\Support\Facades\Storage;
 
 class SendAttendeeInviteMail extends Mailable
 {
@@ -38,7 +39,7 @@ class SendAttendeeInviteMail extends Mailable
 
         $subject = trans("Email.your_ticket_for_event", ["event" => $this->attendee->order->event->title]);
         $file_name = $this->attendee->getReferenceAttribute();
-        $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf';
+        $file_path = Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path') . '/' . $file_name . '.pdf');
 
         return $this->subject($subject)
                     ->attach($file_path)

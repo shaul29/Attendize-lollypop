@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Utils;
+use Illuminate\Support\Facades\Storage;  
 
 class InstallerController extends Controller
 {
@@ -241,7 +242,7 @@ class InstallerController extends Controller
             storage_path('logs'),
             public_path(config('attendize.event_images_path')),
             public_path(config('attendize.organiser_images_path')),
-            public_path(config('attendize.event_pdf_tickets_path')),
+            Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path')),
             base_path('bootstrap/cache'),
             base_path('.env'),
             base_path(),

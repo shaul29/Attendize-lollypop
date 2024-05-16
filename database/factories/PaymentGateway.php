@@ -47,3 +47,14 @@ $factory->state(PaymentGateway::class, 'Stripe SCA', [
     'admin_blade_template' => 'ManageAccount.Partials.StripeSCA',
     'checkout_blade_template' => 'Public.ViewEvent.Partials.PaymentStripeSCA'
 ]);
+
+$factory->state(PaymentGateway::class, 'MercadoPago', [
+    'name' => 'MercadoPago',
+    'provider_name' => 'MercadoPago',
+    'provider_url' => 'https://www.mercadopago.com',
+    'is_on_site' => 0,  
+    'can_refund' => 0,
+    'default' => 0,
+    'admin_blade_template' => 'ManageAccount.Partials.MercadoPago',
+    'checkout_blade_template' => 'Public.ViewEvent.Partials.PaymentMercadoPago'
+]);

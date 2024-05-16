@@ -223,7 +223,7 @@
                     @lang("Order.edit")
                 </a>
                 <a class="btn btn-primary" target="_blank"
-                   href="{{route('showOrderTickets', ['order_reference' => $order->order_reference])}}?download=1">@lang("ManageEvent.print_tickets")</a>
+                href="{{ Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path') . '/' . $order->order_reference . '.pdf') }}">@lang("ManageEvent.print_tickets")</a>
                 <span class="pauseTicketSales btn btn-success" data-id="{{$order->id}}"
                       data-route="{{route('resendOrder', ['order_id'=>$order->id])}}">@lang("ManageEvent.resend_tickets")</span>
                 {!! Form::button(trans("ManageEvent.close"), ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}

@@ -8,3 +8,10 @@ chmod -R a+w .env
 chmod -R a+w storage/
 chmod -R a+w bootstrap/cache/
 php artisan key:generate
+
+# Set permissions for wkhtml2pdf
+chown -R www-data:www-data vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib
+find vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib -type d -exec chmod 755 {} \;
+find vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib -type f -exec chmod 644 {} \;
+chmod +x vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib/wkhtmltopdf-amd64
+chmod +x vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib/wkhtmltopdf-i386

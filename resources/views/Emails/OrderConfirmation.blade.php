@@ -3,9 +3,11 @@
 @section('message_content')
 @lang("basic.hello"),<br><br>
 
-{!! @trans("Order_Emails.successful_order", ["name"=>$order->event->title]) !!}<br><br>
+{!! @trans("Order_Emails.successful_order", ["name" => $order->event->title]) !!}<br><br>
 
-{{ @trans("Order_Emails.tickets_attached") }} <a href="{{route('showOrderDetails', ['order_reference' => $order->order_reference])}}">{{route('showOrderDetails', ['order_reference' => $order->order_reference])}}</a>.
+{{ @trans("Order_Emails.tickets_attached") }} <a href="{{ Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path') . '/' . $order->order_reference . '.pdf') }}">
+    Lollypop_tickets
+</a>.
 
 @if(!$order->is_payment_received)
 <br><br>
@@ -15,15 +17,15 @@
 <br><br>
 @endif
 
-<h3>Order Details</h3>
-Order Reference: <strong>{{$order->order_reference}}</strong><br>
-Order Name: <strong>{{$order->full_name}}</strong><br>
-Order Date: <strong>{{$order->created_at->format(config('attendize.default_datetime_format'))}}</strong><br>
-Order Email: <strong>{{$order->email}}</strong><br>
-<a href="{!! route('downloadCalendarIcs', ['event_id' => $order->event->id]) !!}">Add To Calendar</a>
+<h3>Detalles del pedido</h3>
+Referencia del pedido: <strong>{{$order->order_reference}}</strong><br>
+Nombre del pedido: <strong>{{$order->full_name}}</strong><br>
+Fecha del pedido: <strong>{{$order->created_at->format(config('attendize.default_datetime_format'))}}</strong><br>
+Correo electrónico del pedido: <strong>{{$order->email}}</strong><br>
+<a href="{!! route('downloadCalendarIcs', ['event_id' => $order->event->id]) !!}">Añadir al calendario</a>
 
 @if ($order->is_business)
-<h3>Business Details</h3>
+<h3>Detalles de la empresa</h3>
 @if ($order->business_name) @lang("Public_ViewEvent.business_name"): <strong>{{$order->business_name}}</strong><br>@endif
 @if ($order->business_tax_number) @lang("Public_ViewEvent.business_tax_number"): <strong>{{$order->business_tax_number}}</strong><br>@endif
 @if ($order->business_address_line_one) @lang("Public_ViewEvent.business_address_line1"): <strong>{{$order->business_address_line_one}}</strong><br>@endif
@@ -33,21 +35,21 @@ Order Email: <strong>{{$order->email}}</strong><br>
 @if ($order->business_address_code) @lang("Public_ViewEvent.business_address_code"): <strong>{{$order->business_address_code}}</strong><br>@endif
 @endif
 
-<h3>Order Items</h3>
+<h3>Artículos del pedido</h3>
 <div style="padding:10px; background: #F9F9F9; border: 1px solid #f1f1f1;">
     <table style="width:100%; margin:10px;">
         <tr>
             <td>
-                <strong>Ticket</strong>
+                <strong>Entrada</strong>
             </td>
             <td>
-                <strong>Qty.</strong>
+                <strong>Cantidad</strong>
             </td>
             <td>
-                <strong>Price</strong>
+                <strong>Precio</strong>
             </td>
             <td>
-                <strong>Fee</strong>
+                <strong>Tarifa</strong>
             </td>
             <td>
                 <strong>Total</strong>
@@ -59,7 +61,7 @@ Order Email: <strong>{{$order->email}}</strong><br>
             <td>{{$order_item->quantity}}</td>
             <td>
                 @isFree($order_item->unit_price)
-                FREE
+                GRATIS
                 @else
                 {{money($order_item->unit_price, $order->event->currency)}}
                 @endif
@@ -73,17 +75,16 @@ Order Email: <strong>{{$order->email}}</strong><br>
             </td>
             <td>
                 @isFree($order_item->unit_price)
-                FREE
+                GRATIS
                 @else
-                {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity),
-                $order->event->currency)}}
+                {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity), $order->event->currency)}}
                 @endif
             </td>
         </tr>
         @endforeach
         <tr>
             <td colspan="3"></td>
-            <td><strong>Sub Total</strong></td>
+            <td><strong>Subtotal</strong></td>
             <td colspan="2">
                 {{$orderService->getOrderTotalWithBookingFee(true)}}
             </td>
@@ -110,5 +111,5 @@ Order Email: <strong>{{$order->email}}</strong><br>
     <br><br>
 </div>
 <br><br>
-Thank you
+Gracias
 @stop

@@ -15,7 +15,7 @@
         "php": "^7.3",
         "ext-json": "*",
         "doctrine/dbal": "^2.9",
-        "dompdf/dompdf": "^0.8",
+        "dompdf/dompdf": "^2.0",
         "fideloper/proxy": "^4.2",
         "graham-campbell/markdown": "11.1.0",
         "guzzlehttp/guzzle": "^6.4",
@@ -42,7 +42,8 @@
         "predis/predis": "~1.1",
         "stripe/stripe-php": "^7.1",
         "superbalist/php-money": "^2.0",
-        "vinelab/http": "~1.5"
+        "vinelab/http": "~1.5",
+        "barryvdh/laravel-dompdf": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",

@@ -6,6 +6,7 @@ use App\Models\Attendee;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 
 class SendOrderAttendeeTicketMail extends Mailable
@@ -39,7 +40,7 @@ class SendOrderAttendeeTicketMail extends Mailable
     public function build()
     {
         $file_name = $this->attendee->getReferenceAttribute();
-        $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf';
+        $file_path = Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path') . '/' . $file_name . '.pdf');
 
         $subject = trans(
             "Controllers.tickets_for_event",

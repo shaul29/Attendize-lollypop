@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use PDF;
 use Illuminate\Support\Str;
 use Superbalist\Money\Money;
+use Illuminate\Support\Facades\Storage;
+use Log;
 
 class Order extends MyBaseModel
 {
@@ -176,25 +178,30 @@ class Order extends MyBaseModel
             'css'       => file_get_contents(public_path('assets/stylesheet/ticket.css')),
             'image'     => base64_encode(file_get_contents(public_path($this->event->organiser->full_logo_path))),
         ];
-
-        $pdf_file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $this->order_reference;
-        $pdf_file = $pdf_file_path . '.pdf';
-
-        if (file_exists($pdf_file)) {
+    
+        $file_name_with_ext = $this->order_reference . '.pdf';
+        $s3_path = config('attendize.event_pdf_tickets_path') . '/' . $file_name_with_ext;
+    
+        if (Storage::disk('s3')->exists($s3_path)) {
+            Log::info("Ticket already exists on S3: " . Storage::disk('s3')->url($s3_path));
             return true;
         }
-
-        if (!is_dir($pdf_file_path)) {
-            File::makeDirectory(dirname($pdf_file_path), 0777, true, true);
+    
+        try {
+            $pdf = PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data);
+            $content = $pdf->output();
+            Storage::disk('s3')->put($s3_path, $content);
+            Log::info("Ticket generated and saved to S3: " . Storage::disk('s3')->url($s3_path));
+            
+            // Update the ticket PDF path
+            $this->ticket_pdf_path = Storage::disk('s3')->url($s3_path);
+            $this->save();
+    
+            return true;
+        } catch (\Exception $e) {
+            Log::error("Error generating ticket: " . $e->getMessage());
+            return false;
         }
-
-        PDF::setOutputMode('F'); // force to file
-        PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $pdf_file_path);
-
-        $this->ticket_pdf_path = config('attendize.event_pdf_tickets_path') . '/' . $this->order_reference . '.pdf';
-        $this->save();
-
-        return file_exists($pdf_file);
     }
 
     /**

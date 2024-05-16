@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\EventsApiController;
 use App\Http\Controllers\API\TicketsApiController;
-
+use App\Http\Controllers\EventCheckoutController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +38,9 @@ Route::get('/events', [EventsApiController::class, 'index']);
 
 Route::get('/events/{event_id}/tickets', [TicketsApiController::class, 'index'])->name('events.tickets');
 
+Route::post('/events/{event_id}/validate-tickets', [EventCheckoutController::class, 'postValidateTickets'])->name('events.validate-tickets');
 
+Route::post('events/{event_id}/complete-order', [EventCheckoutController::class, 'completeOrder'])->name('orders.complete');
 
 /*
  * ---------------

@@ -27,6 +27,7 @@ use Mail;
 use PDF;
 use Validator;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Storage; 
 
 class EventAttendeesController extends MyBaseController
 {
@@ -446,18 +447,18 @@ class EventAttendeesController extends MyBaseController
     {
         $attendee = Attendee::scope()->findOrFail($attendee_id);
         $attendee_reference = $attendee->getReferenceAttribute();
-
+    
         Log::debug("Exporting ticket PDF", [
             'attendee_id' => $attendee_id,
             'order_reference' => $attendee->order->order_reference,
             'attendee_reference' => $attendee_reference,
             'event_id' => $event_id
         ]);
-
-        $pdf_file = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $attendee_reference . '.pdf';
-
+    
+        $pdf_file = Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path') . '/' . $attendee_reference . '.pdf');
+    
         $this->dispatchNow(new GenerateTicketJob($attendee));
-
+    
         return response()->download($pdf_file);
     }
 

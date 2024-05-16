@@ -184,7 +184,7 @@
                 <div class="float-l">
                     @if($event->images->count())
                     <div class="thumbnail">
-                       {!!Html::image('/'.$event->images->first()['image_path'])!!}
+                    <img src="{{ Storage::disk('s3')->url($event->images->first()['image_path']) }}" alt="Event Image">
                     </div>
                     @endif
                 </div>
