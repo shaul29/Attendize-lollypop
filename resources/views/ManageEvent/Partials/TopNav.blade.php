@@ -22,12 +22,5 @@
             </span>
         </a>
     </li>
-    <!--/ Show Side Menu -->
-    <li class="nav-button">
-        <a target="_blank" href="{{$event->event_url}}">
-            <span>
-                <i class="ico-eye2"></i>&nbsp;@lang("ManageEvent.event_page")
-            </span>
-        </a>
-    </li>
+
 </ul>

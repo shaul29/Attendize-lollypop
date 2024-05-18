@@ -157,7 +157,7 @@
                 </div>
 
                 @if($event->images->count())
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         {!! Form::label('event_image_position', trans("Event.event_image_position"), array('class'=>'control-label')) !!}
                         {!! Form::select('event_image_position', [
                                 '' => trans("Event.event_image_position_hide"),
@@ -169,7 +169,7 @@
                             old('event_image_position'),
                             ['class'=>'form-control']
                         ) !!}
-                    </div>
+                    </div> -->
                     {!! Form::label('', trans("Event.current_event_flyer"), array('class'=>'control-label ')) !!}
                     <div class="form-group">
                         <div class="well well-sm well-small">
@@ -191,8 +191,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="form-group">
+                    TODO: ADD TAG MANAGER
                     {!! Form::label('google_tag_manager_code', trans("Organiser.google_tag_manager_code"), ['class'=>'control-label']) !!}
                     {!!  Form::text('google_tag_manager_code', old('google_tag_manager_code'), [
                             'class'=>'form-control',
@@ -200,7 +201,7 @@
                         ])
                     !!}
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

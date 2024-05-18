@@ -52,9 +52,6 @@
                 <li class="active">
                     <a href="#organiserSettings" data-toggle="tab">@lang("Organiser.organiser_settings")</a>
                 </li>
-                <li>
-                    <a href="#OrganiserPageDesign" data-toggle="tab">@lang("Organiser.organiser_page_design")</a>
-                </li>
             </ul>
             <div class="tab-content panel">
                 <div class="tab-pane active" id="organiserSettings">
@@ -97,15 +94,6 @@
                                                 ))  !!}
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <p class="control-label">{!! trans("Organiser.organiser_tax_prompt") !!}</p>
-                                <label for="Yes" class="control-label" id="charge_yes">{!! trans("Organiser.yes") !!}</label>
-                                <input id="charge_yes" name="charge_tax" type="radio" value="1" {{ $organiser->charge_tax == 1 ? 'checked' : '' }}>
-                                <label for="No" class="control-label" id="charge_no">{!! trans("Organiser.no") !!}</label>
-                                <input id="charge_yes" name="charge_tax" type="radio" value="0" {{ $organiser->charge_tax == 0 ? 'checked' : '' }}>
-                            </div>
-                        </div>
                         <div id="tax_fields">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -129,7 +117,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- TODO: TAG MANAGER -->
+                    <!-- <div class="form-group">
                         {!! Form::label('google_analytics_code', trans("Organiser.google_analytics_code"), array('class'=>'control-label')) !!}
                         {!!  Form::text('google_analytics_code', old('google_analytics_code'),
                                                 array(
@@ -145,37 +134,7 @@
                                 'placeholder' => trans("Organiser.google_tag_manager_code_placeholder"),
                             ])
                         !!}
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('facebook', trans("Organiser.organiser_facebook"), array('class'=>'control-label ')) !!}
-
-                                <div class="input-group">
-                                    <span style="background-color: #eee;" class="input-group-addon">facebook.com/</span>
-                                    {!!  Form::text('facebook', old('facebook'),
-                                                    array(
-                                                    'class'=>'form-control ',
-                                                    'placeholder'=> trans("Organiser.organiser_username_facebook_placeholder")
-                                                    ))  !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('twitter', trans("Organiser.organiser_twitter"), array('class'=>'control-label ')) !!}
-
-                                <div class="input-group">
-                                    <span style="background-color: #eee;" class="input-group-addon">twitter.com/</span>
-                                    {!!  Form::text('twitter', old('twitter'),
-                                             array(
-                                             'class'=>'form-control ',
-                                                    'placeholder'=> trans("Organiser.organiser_username_twitter_placeholder")
-                                             ))  !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div> -->
                     @if(is_file($organiser->logo_path))
                         <div class="form-group">
                             {!! Form::label('current_logo', trans("Organiser.current_logo"), array('class'=>'control-label ')) !!}
@@ -187,11 +146,6 @@
                             </div>
                         </div>
                     @endif
-                    <div class="form-group">
-                        {!!  Form::labelWithHelp('organiser_logo', trans("Organiser.organiser_logo"), array('class'=>'control-label '),
-                            trans("Organiser.organiser_logo_help"))  !!}
-                        {!!Form::styledFile('organiser_logo')!!}
-                    </div>
                     <div class="modal-footer">
                         {!! Form::submit(trans("Organiser.save_organiser"), ['class'=>"btn btn-success"]) !!}
                     </div>

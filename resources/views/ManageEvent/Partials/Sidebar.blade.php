@@ -56,24 +56,20 @@
                     <span class="text">@lang("ManageEvent.check-in")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*surveys*') ? 'active' : '' }}">
+            <!-- TODO: MANAGE SURVEY -->
+            <!-- <li class="{{ Request::is('*surveys*') ? 'active' : '' }}">
                 <a href="{{route('showEventSurveys', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-question"></i></span>
                     <span class="text">@lang("ManageEvent.surveys")</span>
                 </a>
-            </li>
-            <li class="{{ Request::is('*widgets*') ? 'active' : '' }}">
-                <a href="{{route('showEventWidgets', array('event_id' => $event->id))}}">
-                    <span class="figure"><i class="ico-code"></i></span>
-                    <span class="text">@lang("ManageEvent.widgets")</span>
-                </a>
-            </li>
-            <li class="{{ Request::is('*access_codes*') ? 'active' : '' }}">
+            </li> -->
+            <!-- TODO: add access codes -->
+            <!-- <li class="{{ Request::is('*access_codes*') ? 'active' : '' }}">
                 <a href="{{ route('showEventAccessCodes', [ 'event_id' => $event->id ]) }}">
                     <span class="figure"><i class="ico-money"></i></span>
                     <span class="text">@lang("AccessCodes.title")</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </section>
 </aside>

@@ -176,37 +176,26 @@ Route::group(
             [EventCheckoutController::class, 'postValidateTickets']
         )->name('postValidateTickets');
 
-        Route::post('{event_id}/checkout/validate',
-            [EventCheckoutController::class, 'postValidateOrder']
-        )->name('postValidateOrder');
+        // Route::post('{event_id}/checkout/validate',
+        //     [EventCheckoutController::class, 'postValidateOrder']
+        // )->name('postValidateOrder');
 
-        Route::get('{event_id}/checkout/payment',
-            [EventCheckoutController::class, 'showEventPayment']
-        )->name('showEventPayment');
+        // Route::get('{event_id}/checkout/payment',
+        //     [EventCheckoutController::class, 'showEventPayment']
+        // )->name('showEventPayment');
 
-        Route::get('{event_id}/checkout/create',
-            [EventCheckoutController::class, 'showEventCheckout']
-        )->name('showEventCheckout');
+        // Route::get('{event_id}/checkout/create',
+        //     [EventCheckoutController::class, 'showEventCheckout']
+        // )->name('showEventCheckout');
 
-        Route::get('{event_id}/checkout/success',
-            [EventCheckoutController::class, 'showEventCheckoutPaymentReturn']
-        )->name('showEventCheckoutPaymentReturn');
+        // Route::get('{event_id}/checkout/success',
+        //     [EventCheckoutController::class, 'showEventCheckoutPaymentReturn']
+        // )->name('showEventCheckoutPaymentReturn');
 
-        Route::post('{event_id}/checkout/create',
-            [EventCheckoutController::class, 'postCreateOrder']
-        )->name('postCreateOrder');
+        // Route::post('{event_id}/checkout/create',
+        //     [EventCheckoutController::class, 'postCreateOrder']
+        // )->name('postCreateOrder');
     });
-
-    /*
-     * Public view order routes
-     */
-    Route::get('order/{order_reference}',
-        [EventCheckoutController::class, 'showOrderDetails']
-    )->name('showOrderDetails');
-
-    Route::get('order/{order_reference}/tickets',
-        [EventCheckoutController::class, 'showOrderTickets']
-    )->name('showOrderTickets');
 
     /*
      * Backend routes
