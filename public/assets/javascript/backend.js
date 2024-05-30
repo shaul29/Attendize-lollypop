@@ -9414,8 +9414,8 @@ $.cf = {
         var $div = $("<div>", {id: "DatePicker"});
         $("body").append($div);
         $div.DateTimePicker({
-            dateTimeFormat: Attendize.DateTimeFormat,
-            dateSeparator: Attendize.DateSeparator
+            dateTimeFormat: "dd-MM-yyyy HH:mm",
+            dateSeparator: "-"
         });
 
     });
