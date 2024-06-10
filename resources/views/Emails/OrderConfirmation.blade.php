@@ -5,9 +5,7 @@
 
 {!! @trans("Order_Emails.successful_order", ["name" => $order->event->title]) !!}<br><br>
 
-{{ @trans("Order_Emails.tickets_attached") }} <a href="{{ Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path') . '/' . $order->order_reference . '.pdf') }}">
-    Lollypop_tickets
-</a>.
+<p>Tus Tickets serán enviados a este correo electrónico.</p>
 
 @if(!$order->is_payment_received)
 <br><br>

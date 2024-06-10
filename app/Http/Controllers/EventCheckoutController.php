@@ -579,6 +579,7 @@ class EventCheckoutController extends Controller
                 /*
                  * Create the attendees
                  */
+                
                 for ($i = 0; $i < $attendee_details['qty']; $i++) {
 
                     $attendee = new Attendee();
