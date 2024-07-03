@@ -2,9 +2,9 @@
 
 # build the docker images for any environment
 build:
-	docker build --tag attendize_base --target base .
-	docker build --tag attendize_worker --target worker --cache-from attendize_base:latest .
-	docker build --tag attendize_web --target web --cache-from attendize_worker:latest .
+	docker build --tag danielshaul/attendize_base:latest --target base .
+	docker build --tag danielshaul/attendize_worker:latest --target worker .
+	docker build --tag danielshaul/attendize_web:latest --target web .
 
 build-apache:
 	docker build --tag attendize_base --target base --file Dockerfile-apache .

@@ -30,6 +30,7 @@ return [
     'organiser_images_path'  => 'user_content/organiser_images',
     'event_pdf_tickets_path' => 'user_content/pdf_tickets',
     'event_bg_images'        => 'assets/images/public/EventPage/backgrounds',
+    'email_logo_url' => env('EMAIL_LOGO_URL'),
 
     'fallback_organiser_logo_url' => '/assets/images/logo-dark.png',
     'cdn_url'                     => '',
@@ -61,8 +62,8 @@ return [
     'question_radio_single'         => 6,
 
 
-    'default_timezone'              => 30, #Europe/Dublin
-    'default_currency'              => 2, #Euro
+    'default_timezone'              => 22, 
+    'default_currency'              => 28, 
     'default_date_picker_format'    => env('DEFAULT_DATEPICKER_FORMAT', 'dd-MM-yyyy HH:mm'),
     'default_date_picker_seperator' => env('DEFAULT_DATEPICKER_SEPERATOR', '-'),
     'default_datetime_format'       => env('DEFAULT_DATETIME_FORMAT', 'd-m-Y H:i'),

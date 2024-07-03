@@ -2,9 +2,6 @@ version: '3.2'
 
 services:
   web:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
     image: attendize_web:latest
     ports:
     - "8080:80"
@@ -15,7 +12,6 @@ services:
     depends_on:
       - db
       - maildev
-      - redis
       - worker
     env_file:
       - ./.env
@@ -24,7 +20,6 @@ services:
     depends_on:
       - db
       - maildev
-      - redis
     volumes:
       - .:/usr/share/nginx/html
       - .:/var/www
@@ -47,10 +42,5 @@ services:
     image: maildev/maildev
     ports:
       - "1080:1080"
-  redis:
-    image: redis
-    ports:
-      - "6379:6379" 
-
 volumes:
     mysql-data:

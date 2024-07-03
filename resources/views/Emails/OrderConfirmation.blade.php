@@ -5,7 +5,7 @@
 
 {!! @trans("Order_Emails.successful_order", ["name" => $order->event->title]) !!}<br><br>
 
-<p>Tus Tickets serán enviados a este correo electrónico.</p>
+<p>Tus tickets serán enviados a este correo electrónico.</p>
 
 @if(!$order->is_payment_received)
 <br><br>

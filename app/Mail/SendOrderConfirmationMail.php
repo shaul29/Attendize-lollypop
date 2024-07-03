@@ -37,7 +37,7 @@ class SendOrderConfirmationMail extends Mailable
      */
     public function __construct(Order $order, OrderService $orderService)
     {
-        $this->email_logo = $order->event->organiser->full_logo_path;
+        $this->email_logo = config('attendize.email_logo_url');
         $this->order = $order;
         $this->orderService = $orderService;
     }
@@ -49,16 +49,11 @@ class SendOrderConfirmationMail extends Mailable
      */
     public function build()
     {
-        $file_name = $this->order->order_reference;
-        $file_path = Storage::disk('s3')->url(config('attendize.event_pdf_tickets_path') . '/' . $file_name . '.pdf');
-
-
         $subject = trans(
             "Controllers.tickets_for_event",
             ["event" => $this->order->event->title]
         );
         return $this->subject($subject)
-                    ->attach($file_path)
                     ->view('Emails.OrderConfirmation');
     }
 }

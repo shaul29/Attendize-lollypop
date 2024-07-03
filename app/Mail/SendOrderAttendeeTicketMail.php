@@ -29,7 +29,7 @@ class SendOrderAttendeeTicketMail extends Mailable
     public function __construct(Attendee $attendee)
     {
         $this->attendee = $attendee;
-        $this->email_logo = $attendee->event->organiser->full_logo_path;
+        $this->email_logo = config('attendize.email_logo_url');
     }
 
     /**

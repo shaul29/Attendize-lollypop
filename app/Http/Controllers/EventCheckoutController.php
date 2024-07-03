@@ -145,16 +145,6 @@ class EventCheckoutController extends Controller
             ]);
         }
     
-        $activeAccountPaymentGateway = $event->account->getGateway($event->account->payment_gateway_id);
-        //if no payment gateway configured and no offline pay, don't go to the next step and show user error
-        if (empty($activeAccountPaymentGateway) && !$event->enable_offline_payments) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'No hay una pasarela de pago configurada',
-            ]);
-        }
-    
-        $paymentGateway = $activeAccountPaymentGateway ? $activeAccountPaymentGateway->payment_gateway : false;
     
         /*
          * The 'ticket_order_{event_id}' session stores everything we need to complete the transaction.
@@ -178,8 +168,6 @@ class EventCheckoutController extends Controller
                 'order_requires_payment'  => PaymentUtils::requiresPayment($order_total),
                 'account_id'              => $event->account->id,
                 'affiliate_referral'      => Cookie::get('affiliate_' . $event_id),
-                'account_payment_gateway' => $activeAccountPaymentGateway,
-                'payment_gateway'         => $paymentGateway
             ]
         ]);
     }

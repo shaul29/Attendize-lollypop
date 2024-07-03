@@ -38,7 +38,7 @@ class SendOrderNotificationMail extends Mailable
     {
         $this->order = $order;
         $this->orderService = $orderService;
-        $this->email_logo = $order->event->organiser->full_logo_path;
+        $this->email_logo = config('attendize.email_logo_url');
     }
 
     /**
