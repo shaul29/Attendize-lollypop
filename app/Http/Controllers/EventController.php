@@ -167,23 +167,26 @@ class EventController extends MyBaseController
 
         if ($request->hasFile('event_image')) {
             $path = public_path() . '/' . config('attendize.event_images_path');
-            $filename = 'event_image-' . md5(time() . $event->id) . '.' . strtolower($request->file('event_image')->getClientOriginalExtension());
-
+            $filename = 'event_image-' . md5(time() . $event->id) . '.jpg';  // Force .jpg extension
+        
             $file_full_path = $path . '/' . $filename;
-
-            $request->file('event_image')->move($path, $filename);
-
-            $img = Image::make($file_full_path);
-
-            $img->resize(800, null, function ($constraint) {
+        
+            $img = Image::make($request->file('event_image'));
+        
+  
+            $img->fit(347, 347, function ($constraint) {
                 $constraint->aspectRatio();
-                $constraint->upsize();
             });
-
+        
+      
+            $img->encode('jpg');  
+        
+      
             $img->save($file_full_path);
-
+        
             /* Upload to s3 */
             try {
+
                 \Storage::put(config('attendize.event_images_path') . '/' . $filename, file_get_contents($file_full_path));
                 Log::info('File uploaded to S3 successfully', ['filename' => $filename]);
             
@@ -191,6 +194,9 @@ class EventController extends MyBaseController
                 $eventImage->image_path = config('attendize.event_images_path') . '/' . $filename;
                 $eventImage->event_id = $event->id;
                 $eventImage->save();
+        
+
+                unlink($file_full_path);
             } catch (\Exception $e) {
                 Log::error('Failed to upload file to S3', ['filename' => $filename, 'error' => $e->getMessage()]);
             }
@@ -281,29 +287,43 @@ class EventController extends MyBaseController
 
         if ($request->hasFile('event_image')) {
             $path = public_path() . '/' . config('attendize.event_images_path');
-            $filename = 'event_image-' . md5(time() . $event->id) . '.' . strtolower($request->file('event_image')->getClientOriginalExtension());
-
+            $filename = 'event_image-' . md5(time() . $event->id) . '.jpg';  // Force .jpg extension
+        
             $file_full_path = $path . '/' . $filename;
+        
+            $img = Image::make($request->file('event_image'));
+        
 
-            $request->file('event_image')->move($path, $filename);
-
-            $img = Image::make($file_full_path);
-
-            $img->resize(800, null, function ($constraint) {
+            $img->fit(347, 347, function ($constraint) {
                 $constraint->aspectRatio();
-                $constraint->upsize();
             });
+        
+
+            $img->encode('jpg');  
+        
 
             $img->save($file_full_path);
+        
+            try {
 
-            \Storage::put(config('attendize.event_images_path') . '/' . $filename, file_get_contents($file_full_path));
+                \Storage::put(config('attendize.event_images_path') . '/' . $filename, file_get_contents($file_full_path));
+        
 
-            EventImage::where('event_id', '=', $event->id)->delete();
-
-            $eventImage = EventImage::createNew();
-            $eventImage->image_path = config('attendize.event_images_path') . '/' . $filename;
-            $eventImage->event_id = $event->id;
-            $eventImage->save();
+                EventImage::where('event_id', '=', $event->id)->delete();
+   
+                $eventImage = EventImage::createNew();
+                $eventImage->image_path = config('attendize.event_images_path') . '/' . $filename;
+                $eventImage->event_id = $event->id;
+                $eventImage->save();
+        
+               
+                unlink($file_full_path);
+        
+                Log::info('Event image updated successfully', ['event_id' => $event->id, 'filename' => $filename]);
+            } catch (\Exception $e) {
+                Log::error('Failed to update event image', ['event_id' => $event->id, 'error' => $e->getMessage()]);
+                
+            }
         }
 
         return response()->json([

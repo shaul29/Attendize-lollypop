@@ -250,7 +250,6 @@ class Ticket extends MyBaseModel
     {
         return PaymentUtils::isFree($this->price);
     }
-
     /**
      * Return the maximum figure to go to on dropdowns.
      *

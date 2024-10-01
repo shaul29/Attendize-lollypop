@@ -177,10 +177,10 @@
                                                       data-route="{{route('postPauseTicket', ['event_id'=>$event->id])}}">
                                     <i class="ico-pause"></i> @lang("Ticket.pause")
                                 </span>
+                                <!-- here -->
                                             @endif
                                         @else
-                                            {{\App\Models\TicketStatus::find($ticket->sale_status)->name}}
-                                        @endif
+                                        {{ \App\Models\TicketStatus::find($ticket->sale_status)->getTranslatedName() }}                                        @endif
                                     </a>
                                 </li>
                             </ul>

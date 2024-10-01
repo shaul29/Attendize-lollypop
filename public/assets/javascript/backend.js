@@ -9718,7 +9718,7 @@ $.cf = {
             if (!$(this).data('original-text')) {
                 $(this).data('original-text', $(this).html());
             }
-            $(this).html(!$(this).data('show-less-text') ? 'Show Less' : $(this).data('show-less-text'));
+            $(this).html(!$(this).data('show-less-text') ? 'Mostrar Menos' : $(this).data('show-less-text'));
         }
 
         $(this).toggleClass('toggled');

@@ -56,7 +56,7 @@
                     @endif
                 </div>
                 <div class="form-group {{ ($errors->has('password_confirmation')) ? 'has-error' : '' }}">
-                    {!! Form::label('password_confirmation', 'Password again', ['class' => 'control-label required']) !!}
+                    {!! Form::label('password_confirmation', 'Repite la contraseña', ['class' => 'control-label required']) !!}
                     {!! Form::password('password_confirmation',  ['class' => 'form-control']) !!}
                     @if($errors->has('password_confirmation'))
                         <p class="help-block">{{ $errors->first('password_confirmation') }}</p>

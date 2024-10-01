@@ -6,6 +6,8 @@ use App\Models\Organiser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
+use Auth;
+
 
 class OrganiserController extends MyBaseController
 {
@@ -16,7 +18,11 @@ class OrganiserController extends MyBaseController
      */
     public function showSelectOrganiser()
     {
-        return view('ManageOrganiser.SelectOrganiser');
+        $organisers = Organiser::where('account_id', Auth::user()->account_id)
+                               ->orderBy('name', 'asc')
+                               ->get();
+
+        return view('ManageOrganiser.SelectOrganiser', compact('organisers'));
     }
 
     /**
